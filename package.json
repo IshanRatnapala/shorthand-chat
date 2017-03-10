@@ -12,13 +12,13 @@
     "watch-js": "nodemon -e js -w client/js -x npm run build-js",
     "watch-scss": "nodemon -e scss -w client/scss -x npm run build-sass",
     "build": "npm run build-min-js & npm run build-min-sass",
-    "serve": "nodemon server.js",
-    "watch": "run-p watch-* serve"
+    "watch": "run-p watch-*"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.15.2",
+    "moment": "^2.17.1",
     "socket.io": "^1.7.3"
   },
   "devDependencies": {
