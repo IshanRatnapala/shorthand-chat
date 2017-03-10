@@ -4,8 +4,30 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-js": "browserify client/js/app.js -o public/js/bundle.js",
+    "build-sass": "node-sass client/scss/styles.scss -o public/css",
+    "build-min-js": "browserify client/js/app.js | uglifyjs -o public/js/bundle.min.js",
+    "build-min-sass": "node-sass client/scss/styles.scss | cleancss -o public/css/styles.min.css",
+    "watch-js": "nodemon -e js -w client/js -x npm run build-js",
+    "watch-scss": "nodemon -e scss -w client/scss -x npm run build-sass",
+    "build": "npm run build-min-js & npm run build-min-sass",
+    "serve": "nodemon server.js",
+    "watch": "run-p watch-* serve"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.2",
+    "socket.io": "^1.7.3"
+  },
+  "devDependencies": {
+    "browserify": "^14.1.0",
+    "clean-css-cli": "^4.0.8",
+    "jquery": "^3.1.1",
+    "node-sass": "^4.5.0",
+    "npm-run-all": "^4.0.2",
+    "socket.io-client": "^1.7.3",
+    "uglifyjs": "^2.4.10"
+  }
 }
