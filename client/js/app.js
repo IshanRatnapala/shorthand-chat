@@ -9,14 +9,18 @@ var $messages = $('#messages');
 var $input = $form.find('input');
 
 // User and room data
-var userRoom = getQueryVariable('room');
+var userRoom = getQueryVariable('room') || 'public';
 var username = getQueryVariable('username') || 'Anonymous';
 
-console.log(username, '->' , userRoom);
+$('#room-name').text(userRoom);
 
 // Setup socket.io
-socket.on('connect', function (socket) {
+socket.on('connect', function () {
     console.log('Connected to socket.io server.');
+    socket.emit('joinRoom', {
+        username: username,
+        room: userRoom
+    });
 });
 socket.on('message', function (data) {
     console.log('New message:', data.text);
@@ -43,6 +47,7 @@ $form.on('submit', function (event) {
 
 function getQueryVariable(variable) {
     var query = window.location.search.substring(1);
+    query = query.replace(/\+/g, ' ');
     var vars = query.split('&');
     for (var i = 0; i < vars.length; i++) {
         var pair = vars[i].split('=');
